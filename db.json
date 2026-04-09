@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "user": "prince",
+      "pass": "vikash",
+      "name": "Prince Sahani",
+      "location": "Bihar",
+      "phone": "8521179901",
+      "email": "pkromeo@gmail.com"
+    },
+    {
+      "id": 2,
+      "user": "vikshs",
+      "pass": "hgk"
+    }
+  ]
+}

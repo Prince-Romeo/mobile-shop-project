@@ -1,0 +1,204 @@
+<template>
+    <div class="text-center py-8 sm:py-12">
+        <h1
+            class="text-3xl sm:text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
+            Mobile Shop Now
+        </h1>
+    </div>
+
+    <div class="w-[95%] sm:w-[80%] m-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+
+        <div v-for="shoe in Shoes" :key="shoe.name" class="Anim">
+            <div class="w-full rounded-xl overflow-hidden shadow-lg bg-white">
+
+                <div class="flex justify-end p-2">
+                    <i @click="Like(shoe)" :class="shoe.liked
+                        ? 'fa-solid fa-heart text-xl sm:text-2xl md:text-3xl text-red-500'
+                        : 'fa-regular fa-heart text-xl sm:text-2xl md:text-3xl text-gray-400'">
+                    </i>
+                </div>
+
+                <div class="w-full h-[280px] sm:h-[400px] md:h-[600px]">
+                    <img :src="shoe.img" class="w-full h-full " />
+                </div>
+
+                <div class="p-3 sm:p-4 bg-[#efe3e3]">
+                    <h2 class="text-sm sm:text-lg md:text-xl font-bold my-2 leading-tight">
+                        {{ shoe.name }}
+                    </h2>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <p class="text-base sm:text-xl md:text-2xl font-bold text-green-700">
+                            ₹{{ shoe.price }}
+                        </p>
+
+                        <p class="text-xs sm:text-lg md:text-xl text-gray-500 line-through">
+                            {{ shoe.original }}
+                        </p>
+
+                        <p class="text-xs sm:text-lg md:text-xl text-black">
+                            {{ shoe.discount }}
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
+                        <button @click="addcart(shoe)"
+                            class="w-full sm:w-1/2 py-2 text-sm sm:text-base bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                            Add to Cart
+                        </button>
+
+                        <button
+                            class="w-full sm:w-1/2 py-2 text-sm sm:text-base bg-yellow-500 text-black rounded-lg hover:bg-yellow-600 transition">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div v-if="showToast"
+            class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transition">
+            Addcart Successful
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router'
+
+const showToast = ref(false)
+const Shoes = ref([
+    {
+        name: "OnePlus Nord 5 ( 256 GB) (8 GB RAM)",
+        price: "32,700",
+        original: "₹45,999",
+        discount: "41% off ",
+        liked: false,
+        img: "https://i.pinimg.com/1200x/0e/71/7d/0e717df5f4110925518a3eff916695d0.jpg"
+    },
+    {
+        name: "Red Magic 9 Pro 5G Gaming Phone",
+        price: "1,09,999",
+        original: "₹1,34,999",
+        discount: "41% off",
+        liked: false,
+        img: "https://i.pinimg.com/736x/11/39/21/113921b5d433d5e513f369f1d47db815.jpg"
+    },
+    {
+        name: "vivo X200T (Stellar Black, 256 GB)",
+        price: "59,999",
+        original: "₹79,999",
+        discount: "25% off",
+        liked: false,
+        img: "https://i.pinimg.com/736x/c8/23/d5/c823d5e2147d3c1a7b4ebcf488ff9c1a.jpg"
+    },
+    {
+        name: "Samsung Galaxy A17 128Gb 5G - Gray Grey",
+        price: "18,498",
+        original: "₹22,999",
+        discount: "6% off",
+        liked: false,
+        img: "https://i.pinimg.com/736x/b7/7d/cc/b77dccdf33680f8bf561e58f90cb0eaf.jpg"
+    },
+    {
+        name: "vivo V70 Elite (Sand Beige, 256 GB) 8 GB RAM",
+        price: "51,999",
+        original: "₹54,999",
+        discount: "5% off",
+        liked: false,
+        img: "https://i.pinimg.com/1200x/fe/12/b5/fe12b5aef3ee0d14a3b3d7436dbb8fba.jpg"
+    },
+    {
+        name: "IQOO 15 5G (Legend,16 GB RAM | 512 GB ROM)",
+        price: "77,999",
+        original: "₹83,999",
+        discount: "7% off",
+        liked: false,
+        img: "https://i.pinimg.com/736x/de/cd/01/decd0110ce2d8d27d1a0435361ca1bb7.jpg"
+    },
+    {
+        name: "Apple iPhone 15 (Black, 128 GB)",
+        price: "56,999",
+        original: "₹59,999",
+        discount: "5% off",
+        liked: false,
+        img: "https://i.pinimg.com/736x/8f/20/74/8f20743342bf40dc9b7b7cb076591d05.jpg"
+    },
+    {
+        name: "Apple iPhone 17 Pro (Silver, 256 GB)",
+        price: "1,34,900",
+        original: "₹1,48,900",
+        discount: "9% off",
+        liked: false,
+        img: "https://i.pinimg.com/1200x/7d/5e/9d/7d5e9df6896127c6967574861da732cb.jpg"
+    },
+    {
+        name: "Apple iPhone 16 Pro ( Titanium, 256 GB)",
+        price: "1,19,900",
+        original: "₹1,30,900",
+        discount: "8% off",
+        liked: false,
+        img: "https://i.pinimg.com/1200x/88/8e/03/888e0395e69f9777627f7fe2ae287f10.jpg"
+    }
+])
+
+
+const Like = (item) => {
+    item.liked = !item.liked
+
+
+    const likedItems = Shoes.value.filter(shoe => shoe.liked)
+
+    localStorage.setItem("liked", JSON.stringify(likedItems))
+}
+
+
+onMounted(() => {
+    const data = JSON.parse(localStorage.getItem("liked"))
+
+    if (data) {
+        Shoes.value.forEach(shoe => {
+            shoe.liked = data.some(likedItem => likedItem.name === shoe.name)
+        })
+    }
+})
+const addcart = (shoe) => {
+    const obj = {
+        name: shoe.name,
+        price: shoe.price,
+        original: shoe.original,
+        discount: shoe.discount,
+        img: shoe.img
+    }
+
+    showToast.value = true
+    setTimeout(() => showToast.value = false, 2000)
+
+    const arr = JSON.parse(localStorage.getItem("Shoes")) || []
+    arr.push(obj)
+    localStorage.setItem("Shoes", JSON.stringify(arr))
+}
+
+
+const router = useRouter()
+
+onMounted(() => {
+    const user = localStorage.getItem("use")
+
+    if (!user) {
+        router.push('/Sinup')
+    }
+})
+</script>
+
+<style>
+.Anim {
+    transition: 0.3s ease;
+}
+
+.Anim:hover {
+    transform: scale(1.02);
+}
+</style>
