@@ -63,7 +63,7 @@ onMounted(() => {
     const data = localStorage.getItem("use")
 
     if (!data) {
-        router.push('/')
+        router.push('/sinup')
     } else {
         user.value = JSON.parse(data)
 

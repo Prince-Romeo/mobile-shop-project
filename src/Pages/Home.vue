@@ -1,54 +1,55 @@
 <template>
     <div class="text-center py-8 sm:py-12">
         <h1
-            class="text-3xl sm:text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
+            class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text">
             Mobile Shop Now
         </h1>
     </div>
 
-    <div class="w-[95%] sm:w-[80%] m-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+    <div class="w-[95%] sm:w-[85%] md:w-[90%] lg:w-[80%] m-auto 
+                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 
+                gap-5 sm:gap-6 md:gap-6">
 
         <div v-for="shoe in Shoes" :key="shoe.name" class="Anim">
             <div class="w-full rounded-xl overflow-hidden shadow-lg bg-white">
 
                 <div class="flex justify-end p-2">
                     <i @click="Like(shoe)" :class="shoe.liked
-                        ? 'fa-solid fa-heart text-xl sm:text-2xl md:text-3xl text-red-500'
-                        : 'fa-regular fa-heart text-xl sm:text-2xl md:text-3xl text-gray-400'">
+                        ? 'fa-solid fa-heart text-xl sm:text-2xl md:text-2xl lg:text-3xl text-red-500'
+                        : 'fa-regular fa-heart text-xl sm:text-2xl md:text-2xl lg:text-3xl text-gray-400'">
                     </i>
                 </div>
 
-                <div class="w-full h-[280px] sm:h-[400px] md:h-[600px]">
-                    <img :src="shoe.img" class="w-full h-full " />
+                <div class="w-full h-[280px] sm:h-[320px] md:h-[260px] lg:h-[300px] flex items-center justify-center">
+                    <img :src="shoe.img" class="max-h-full max-w-full object-contain" />
                 </div>
 
                 <div class="p-3 sm:p-4 bg-[#efe3e3]">
-                    <h2 class="text-sm sm:text-lg md:text-xl font-bold my-2 leading-tight">
+                    <h2 class="text-sm sm:text-lg md:text-base lg:text-lg font-bold my-2 leading-tight break-words">
                         {{ shoe.name }}
                     </h2>
 
                     <div class="flex flex-wrap items-center gap-2">
-                        <p class="text-base sm:text-xl md:text-2xl font-bold text-green-700">
+                        <p class="text-base sm:text-xl md:text-lg lg:text-xl font-bold text-green-700">
                             ₹{{ shoe.price }}
                         </p>
 
-                        <p class="text-xs sm:text-lg md:text-xl text-gray-500 line-through">
+                        <p class="text-xs sm:text-lg md:text-base lg:text-lg text-gray-500 line-through">
                             {{ shoe.original }}
                         </p>
 
-                        <p class="text-xs sm:text-lg md:text-xl text-black">
+                        <p class="text-xs sm:text-lg md:text-base lg:text-lg text-black">
                             {{ shoe.discount }}
                         </p>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
                         <button @click="addcart(shoe)"
-                            class="w-full sm:w-1/2 py-2 text-sm sm:text-base bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                            class="w-full sm:w-1/2 py-2 text-sm sm:text-base bg-red-500 text-white rounded-lg">
                             Add to Cart
                         </button>
 
-                        <button
-                            class="w-full sm:w-1/2 py-2 text-sm sm:text-base bg-yellow-500 text-black rounded-lg hover:bg-yellow-600 transition">
+                        <button class="w-full sm:w-1/2 py-2 text-sm sm:text-base bg-yellow-500 text-black rounded-lg">
                             Buy Now
                         </button>
                     </div>
@@ -62,6 +63,19 @@
             Addcart Successful
         </div>
     </div>
+
+    <footer class="mt-10 bg-gray-900 text-white py-6 sm:py-8">
+        <div class="w-[90%] sm:w-[80%] m-auto text-center space-y-3">
+            <h2 class="text-lg sm:text-xl font-semibold">About Mobile Shop</h2>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                This website helps you explore latest smartphones with best deals, prices and features.
+                Buy your favorite mobile easily with smooth experience.
+            </p>
+            <p class="text-xs sm:text-sm text-gray-400">
+                Made by ❤️ Prince Sahani
+            </p>
+        </div>
+    </footer>
 </template>
 
 <script setup>
@@ -69,6 +83,7 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 
 const showToast = ref(false)
+
 const Shoes = ref([
     {
         name: "OnePlus Nord 5 ( 256 GB) (8 GB RAM)",
@@ -103,7 +118,7 @@ const Shoes = ref([
         img: "https://i.pinimg.com/736x/b7/7d/cc/b77dccdf33680f8bf561e58f90cb0eaf.jpg"
     },
     {
-        name: "vivo V70 Elite (Sand Beige, 256 GB) 8 GB RAM",
+        name: "vivo V70 Elite (Sand Beige, 256 GB) 8 GB ",
         price: "51,999",
         original: "₹54,999",
         discount: "5% off",
@@ -144,26 +159,21 @@ const Shoes = ref([
     }
 ])
 
-
 const Like = (item) => {
     item.liked = !item.liked
-
-
     const likedItems = Shoes.value.filter(shoe => shoe.liked)
-
     localStorage.setItem("liked", JSON.stringify(likedItems))
 }
 
-
 onMounted(() => {
     const data = JSON.parse(localStorage.getItem("liked"))
-
     if (data) {
         Shoes.value.forEach(shoe => {
             shoe.liked = data.some(likedItem => likedItem.name === shoe.name)
         })
     }
 })
+
 const addcart = (shoe) => {
     const obj = {
         name: shoe.name,
@@ -181,12 +191,10 @@ const addcart = (shoe) => {
     localStorage.setItem("Shoes", JSON.stringify(arr))
 }
 
-
 const router = useRouter()
 
 onMounted(() => {
     const user = localStorage.getItem("use")
-
     if (!user) {
         router.push('/Sinup')
     }
