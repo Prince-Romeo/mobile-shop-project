@@ -97,7 +97,7 @@ import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-const BASE_URL = 'http://192.168.1.16:3000'
+const BASE_URL = 'https://mobile-shop-api-t0cw.onrender.com'
 
 const username = ref('')
 const password = ref('')
