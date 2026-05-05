@@ -85,7 +85,7 @@ async function updateProfile() {
         email: editEmail.value
     }
 
-    let res = await axios.put(`http://localhost:3000/users/${user.value.id}`, updated)
+    let res = await axios.put(`http://192.168.1.16:3000/users/${user.value.id}`, updated)
 
     if (res.status === 200) {
         user.value = updated

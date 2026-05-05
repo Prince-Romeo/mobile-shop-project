@@ -3,5 +3,5 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/mobile-shop-project/' // 👈 yaha apna repo name daalo
+  base: '/mobile-shop-project/'   // 👈 IMPORTANT
 })

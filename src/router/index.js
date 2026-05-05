@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Favorites from'../Pages/Favorites.vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Favorites from '../Pages/Favorites.vue'
 import Home from '../Pages/Home.vue'
 import Order from '../Pages/Order.vue'
 import Account from '../Pages/Account.vue'
@@ -7,6 +7,10 @@ import Sinup from '../components/sinup.vue'
 import Pagenotfound from '../Pages/Pagenotfound.vue'
 
 const routes = [
+  {
+    path: '/',
+    component: Home   // 👈 default route
+  },
   {
     path: '/Home',
     component: Home
@@ -28,13 +32,13 @@ const routes = [
     component: Sinup
   },
   {
-  path: '/:pathMatch(.*)*',
-  component: Pagenotfound
-}
+    path: '/:pathMatch(.*)*',
+    component: Pagenotfound
+  }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),   // 👈 FINAL FIX
   routes
 })
 
